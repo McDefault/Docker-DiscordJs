@@ -1,0 +1,12 @@
+{
+  "env": {
+    "TOKEN": "token",
+    "TOPGG": "token",
+    "debug": 1,
+    "restWsBridgeTimeout": 5000,
+    "restTimeOffset": 500,
+    "restRequestTimeout": 15000,
+    "restSweepInterval": 60,
+    "retryLimit": 1
+  }
+}
