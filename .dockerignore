@@ -9,3 +9,4 @@
 **/.editorconfig
 **/.aws
 **/dist
+**/nodemon.json
