@@ -8,8 +8,8 @@ secrets:
 
 services:
   discord-bot-stats:
-    image: mcdefault/discord-bot-statupdater
     build: .
+    image: discord-statupdater
     secrets:
       - TOKEN_FILE
       - TOPGG_FILE
