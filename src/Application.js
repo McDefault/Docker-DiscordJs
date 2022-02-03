@@ -2,10 +2,10 @@ const logger = require("./modules/Logger");
 const {Client, Intents} = require("discord.js");
 const TaskController = require("./controllers/TaskController");
 const TopGGController = require('./controllers/TopGGController');
-
+const EventController = require('./controllers/EventController');
+//Application is called by index.js - the number of instances depends on the number of shards.
 class Application {
     static async init() {
-        // Here we load the config file that contains our token and our prefix values.
         this.config = require("../config.js");
 
         this.client = new Client({
@@ -20,8 +20,8 @@ class Application {
         });
 
         this.topGgController = new TopGGController(Application);
+        this.eventController = new EventController(Application);
         this.taskController = new TaskController(Application);
-
         await this.taskController.init();
 
         await this.client.login(this.config.token).catch(e => logger.error(e.message));

@@ -1,0 +1,23 @@
+version: "3.7"
+
+secrets:
+  TOKEN_FILE:
+    external: true
+  TOPGG_FILE:
+    external: true
+
+services:
+  discord-bot-stats:
+    image: mcdefault/discord-bot-statupdater
+    build: .
+    secrets:
+      - TOKEN_FILE
+      - TOPGG_FILE
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 512M
+    restart: unless-stopped
+    env_file:
+      - .env

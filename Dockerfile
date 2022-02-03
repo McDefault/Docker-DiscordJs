@@ -10,13 +10,13 @@ RUN apk add --update \
     && apk del .build
 
 # add custom config settings
-#Your Bot's Token. Available on https://discordapp.com/developers/applications/me . Default McDebugs Token
+#Your Bot's Token. Available on https://discordapp.com/developers/applications/me - Default none
 ENV TOKEN=tokentemplatehere
-#Your TOPGG Token. Available on https://top.gg/bot/<topgg_id>/webhooks Default none.
+#Your TOPGG Token. Available on https://top.gg/bot/<topgg_id>/webhooks - Default none.
 ENV TOPGG=tokentemplatehere
-#Specify debug mode on or off.
+#Specify debug mode on or off. - Default Off
 ENV DEBUG_MODE=0
-#Maximum time permitted between REST responses and their corresponding websocket events - default 5000
+#Maximum time permitted between REST responses and their corresponding websocket events - Default 5000
 ENV restWsBridgeTimeout=5000
 #Extra time in milliseconds to wait before continuing to make REST requests (higher values will reduce rate-limiting errors on bad connections) - Default 500
 ENV restTimeOffset=500

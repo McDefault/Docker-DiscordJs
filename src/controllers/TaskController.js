@@ -5,7 +5,6 @@ const logger = require("../modules/Logger");
 
 class TaskController {
     tasks;
-    aliases;
 
     constructor(application) {
         this.application = application;
@@ -15,9 +14,7 @@ class TaskController {
 
     async init() {
         this.tasks = {};
-        this.aliases = {};
         this.loadAllTasks();
-
     }
 
     loadTask(taskName) {

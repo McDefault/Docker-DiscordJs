@@ -8,8 +8,6 @@ exports.run = async (application) => {
     const serverCount = application.client.guilds.cache.size;
     const shardCount = application.client.shard.count;
     await application.topGgController.postStats(shardId, serverCount, shardCount);
-
-
 };
 //0 0 */1 * * * elk uur
 //*/15 * * * * * elke 15 sec

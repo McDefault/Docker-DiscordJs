@@ -1,2 +1,6 @@
 # Project exclude paths
 /node_modules/
+nodemon.json
+/.idea
+package-lock.json
+.env
