@@ -16,7 +16,7 @@ Run `docker build --rm -t <image> .` to build the Docker project.
 
 ## Building with Docker compose
 
-run `docker-compose build` to build the Docker project
+Run `docker-compose build` to build the Docker project
 
 ## Running the app with Docker Run
 
@@ -34,17 +34,22 @@ Run `docker-compose up` to run the docker image
 
 ## Running the app with Docker Swarm
 
-Create Docker secrets 
-
 Run `echo <discord_token> | docker secret create TOKEN_FILE -` to create TOKEN secret
 
 Run `echo <topgg_token> | docker secret create TOPGG_FILE -` to create TOPGG secret
 
 Assign the path to these .env variables in the `docker-compose.yaml`
 
-      environment:
-        TOKEN_FILE: /run/secrets/TOKEN_FILE
-        TOPGG_FILE: /run/secrets/TOPGG_FILE
+      services:
+        discord-bot-stats:
+          # more here
+          environment:
+            TOKEN_FILE: /run/secrets/TOKEN_FILE
+            TOPGG_FILE: /run/secrets/TOPGG_FILE
+
+Or: Create file `.env` from template `.env.example` and leave token and topgg environment variables as they are.
+
+Run `docker stack up -c docker-compose.yaml app --with-registry-auth` to run the stack
 
 ## Optional .env variables
 
