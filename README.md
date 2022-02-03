@@ -10,11 +10,15 @@ Create file `nodemon.json` from template `nodemon.json.example` and fill in toke
 
 Run `npm start` for a dev server. The app will automatically reload if you change any of the source files.
 
-## Build
+## Building with Docker CLI
 
 Run `docker build --rm -t <image> .` to build the Docker project.
 
-## Running the app with Docker
+## Building with Docker compose
+
+run `docker-compose build` to build the Docker project
+
+## Running the app with Docker Run
 
 Run `docker run --env TOKEN=<discord_token> --env TOPGG=<topgg_token> <image>` to run the docker image
 
@@ -22,11 +26,25 @@ Make sure to assign the following .env variables
 - TOKEN
 - TOPGG
 
+## Running the app with Docker Compose
+
+Create file `.env` from template `.env.example` and fill in token and topgg environment variables.
+
+Run `docker-compose up` to run the docker image
+
 ## Running the app with Docker Swarm
 
-Create Docker secrets and assign the path to these .env variables
-- TOKEN_FILE=/run/secrets/TOKEN_FILE
-- TOPGG_FILE=/run/secrets/TOPGG_FILE
+Create Docker secrets 
+
+Run `echo <discord_token> | docker secret create TOKEN_FILE -` to create TOKEN secret
+
+Run `echo <topgg_token> | docker secret create TOPGG_FILE -` to create TOPGG secret
+
+Assign the path to these .env variables in the `docker-compose.yaml`
+
+      environment:
+        TOKEN_FILE: /run/secrets/TOKEN_FILE
+        TOPGG_FILE: /run/secrets/TOPGG_FILE
 
 ## Optional .env variables
 
