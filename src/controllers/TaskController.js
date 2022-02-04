@@ -43,7 +43,7 @@ class TaskController {
         }
     };
 
-    // Here we load **commands** into memory, as a collection, so they're accessible
+    // Here we load **tasks** into memory, as a collection, so they're accessible
     // here and everywhere else.
     async loadAllTasks() {
         const cmdFiles = await readdir("./src/tasks/");
