@@ -8,6 +8,9 @@ const config = {
   "restSweepInterval":parseInt(process.env.restSweepInterval),
   "retryLimit":parseInt(process.env.retryLimit),
   "debug": (parseInt(process.env.DEBUG_MODE) === 1),
+  "shardSplitted": parseInt(process.env.SHARD_SPLITTED),
+  "shardId": parseInt(process.env.SHARD_ID),
+  "totalShards": parseInt(process.env.TOTAL_SHARDS),
 };
 
 module.exports = config;

@@ -1,23 +1,51 @@
 version: "3.7"
 
+#docker network create -d overlay --attachable dropw-mongodb-ntw-swarm
+#docker stack up -c docker-compose.yaml app --with-registry-auth
+#List of secrets for Docker Swarm
 secrets:
   TOKEN_FILE:
     external: true
   TOPGG_FILE:
     external: true
 
+#service template
+x-discord-bot:
+  &discord-bot
+  build: .
+  image: discord-statupdater
+  secrets:
+    - TOKEN_FILE
+    - TOPGG_FILE
+  deploy:
+    replicas: 1
+    resources:
+      limits:
+        memory: 512M
+  restart: unless-stopped
+  env_file:
+    - .env
+
+#this example shows four services each running their own shard
+#list of services
 services:
-  discord-bot-stats:
-    build: .
-    image: discord-statupdater
-    secrets:
-      - TOKEN_FILE
-      - TOPGG_FILE
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          memory: 512M
-    restart: unless-stopped
-    env_file:
-      - .env
+  discord-stats-0:
+    <<: *discord-bot
+    container_name: shard-0
+    environment:
+      SHARD_ID: 0
+  discord-stats-1:
+    <<: *discord-bot
+    container_name: shard-1
+    environment:
+      SHARD_ID: 1
+  discord-stats-2:
+    <<: *discord-bot
+    container_name: shard-2
+    environment:
+      SHARD_ID: 2
+  discord-stats-3:
+    <<: *discord-bot
+    container_name: shard-3
+    environment:
+      SHARD_ID: 3

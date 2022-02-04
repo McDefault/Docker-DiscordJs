@@ -31,6 +31,12 @@ ENV restRequestTimeout=15000
 ENV restSweepInterval=60
 #How many times to retry on 5XX errors (Infinity for indefinite amount of retries) - Default 1
 ENV retryLimit=1
+#Are shards splitted over multiple services - Default 0
+ENV SHARD_SPLITTED=0
+#Shard number to run container on
+ENV SHARD_ID=0
+#Total number of shards
+ENV TOTAL_SHARDS=1
 
 WORKDIR /usr/src/bot
 # Let's run it!
