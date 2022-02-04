@@ -38,18 +38,29 @@ Run `echo <discord_token> | docker secret create TOKEN_FILE -` to create TOKEN s
 
 Run `echo <topgg_token> | docker secret create TOPGG_FILE -` to create TOPGG secret
 
-Assign the path to these .env variables in the `docker-compose.yaml`
-
-      services:
-        discord-bot-stats:
-          # more here
-          environment:
-            TOKEN_FILE: /run/secrets/TOKEN_FILE
-            TOPGG_FILE: /run/secrets/TOPGG_FILE
-
-Or: Create file `.env` from template `.env.example` and leave token and topgg environment variables as they are.
+Create file `.env` from template `.env.example` and leave token and topgg environment variables as they are.
 
 Run `docker stack up -c docker-compose.yaml app --with-registry-auth` to run the stack
+
+## Split shards into multiple services
+
+This can be done with Swarm and Compose
+
+Create file `.env` from template `.env.example` and change `SHARD_SPLITTED` to `1` and `TOTAL_SHARDS` to the number of services/shards
+
+Assign the amount of services in the `docker-compose.yaml` and change the `SHARD_ID` accordingly. The stack in this repo has four shards as example. 
+
+Either remove or add servives to decrease or increase the amount of services/shards. Each service can only have one shard if splitting is active.
+
+
+      services:
+        discord-bot-stats-0:
+          <<: *discord-bot
+          container_name: shard-0
+          environment:
+            SHARD_ID: 0
+
+>  ***NOTE: The amount of services must be equal to `TOTAL_SHARDS` in your .env file.***
 
 ## Optional .env variables
 
@@ -69,7 +80,6 @@ Time to wait before cancelling a REST request, in milliseconds - Default 15000
 
 `restSweepInterval=60`
 How frequently to delete inactive request buckets, in seconds (or 0 for never) - Default 60
-
 
 `retryLimit=1`
 How many times to retry on 5XX errors (Infinity for indefinite amount of retries) - Default 1
