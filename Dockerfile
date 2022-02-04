@@ -1,14 +1,19 @@
-FROM node:16-alpine
+FROM alpine:3.15 as install
 # Setup Work directory.
 WORKDIR /usr/src/bot
 COPY package.json ./
 
 # Let's install everything!
 RUN apk add --update \
+    && apk add --no-cache nodejs-current npm \
     && apk add --no-cache --virtual .build git curl build-base g++ \
-    && npm install \
+    && npm install --only=production \
     && apk del .build
 
+# Copy project to our WORKDIR
+COPY . .
+
+FROM install as run
 # add custom config settings
 #Your Bot's Token. Available on https://discordapp.com/developers/applications/me - Default none
 ENV TOKEN=tokentemplatehere
@@ -27,8 +32,6 @@ ENV restSweepInterval=60
 #How many times to retry on 5XX errors (Infinity for indefinite amount of retries) - Default 1
 ENV retryLimit=1
 
-# Copy project to our WORKDIR
-COPY . .
-
+WORKDIR /usr/src/bot
 # Let's run it!
 CMD [ "node", "--max_old_space_size=450", "src/index.js" ]
