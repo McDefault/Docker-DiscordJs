@@ -1,7 +1,5 @@
 version: "3.7"
 
-#docker network create -d overlay --attachable dropw-mongodb-ntw-swarm
-#docker stack up -c docker-compose.yaml app --with-registry-auth
 #List of secrets for Docker Swarm
 secrets:
   TOKEN_FILE:
