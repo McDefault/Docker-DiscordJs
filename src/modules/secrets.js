@@ -4,6 +4,7 @@ const log = require('./Logger');
 const dockerSecret = {};
 
 dockerSecret.read = function read(secretNameAndPath) {
+    if (!secretNameAndPath) return false;
     try {
         log.log(`Looking up secret: ${secretNameAndPath}.`);
 
