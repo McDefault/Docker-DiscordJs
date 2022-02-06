@@ -45,6 +45,10 @@ ENV SHARD_ID=0
 #Total number of shards
 ENV TOTAL_SHARDS=1
 
+# check every 30s to ensure this service returns HTTP 200
+HEALTHCHECK --interval=30s --timeout=3s --start-period=15s \
+  CMD [ "node", "./healthcheck.js" ]
+
 WORKDIR /usr/src/bot
 # Let's run it!
 CMD [ "node", "--max_old_space_size=450", "src/index.js" ]
