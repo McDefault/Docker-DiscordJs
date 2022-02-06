@@ -1,0 +1,30 @@
+version: "3.7"
+
+
+#service template
+x-discord-bot:
+  &discord-bot
+  build: .
+  image: discord-statupdater:dev
+  command: npx nodemon src/index.js
+  volumes:
+    - ./src:/usr/src/bot/src
+  restart: unless-stopped
+  env_file:
+    - .env
+  environment:
+    NODE_ENV: 'development'
+
+#this config is automatically applied when using docker compose up
+#override service template for local development
+#automatically restarts the application after changing source files
+#mounts local src folder to service src folder
+services:
+  discord-stats-0:
+    <<: *discord-bot
+#  discord-stats-1:
+#    <<: *discord-bot
+#  discord-stats-2:
+#    <<: *discord-bot
+#  discord-stats-3:
+#    <<: *discord-bot

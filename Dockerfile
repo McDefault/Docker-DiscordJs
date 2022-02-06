@@ -1,13 +1,20 @@
 FROM alpine:3.15 as install
+
+# set our node environment, either development or production
+# defaults to production, compose overrides this to development on build and run
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
+
 # Setup Work directory.
 WORKDIR /usr/src/bot
 COPY package.json ./
 
 # Let's install everything!
+# will not install devDependencies in production
 RUN apk add --update \
     && apk add --no-cache nodejs-current npm \
     && apk add --no-cache --virtual .build git curl build-base g++ \
-    && npm install --only=production \
+    && npm install \
     && apk del .build
 
 # Copy project to our WORKDIR

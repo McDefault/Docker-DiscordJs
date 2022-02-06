@@ -1,0 +1,38 @@
+version: "3.7"
+
+#service template
+x-discord-bot:
+  &discord-bot
+  build: .
+  secrets:
+    - TOKEN_FILE
+    - TOPGG_FILE
+  deploy:
+    replicas: 1
+    resources:
+      limits:
+        memory: 512M
+      reservations:
+        cpus: '0.50'
+        memory: 200M
+
+#List of secrets for Docker Swarm
+secrets:
+  TOKEN_FILE:
+    external: true
+  TOPGG_FILE:
+    external: true
+
+#This file can be extended to the base file
+#This example shows one services running all shards
+#Remove the comments down below and set ENV SHARD_SPLITTED=1 and TOTAL_SHARDS=4 to get four services each running their own shard
+#list of services
+services:
+  discord-stats-0:
+    <<: *discord-bot
+#  discord-stats-1:
+#    <<: *discord-bot
+#  discord-stats-2:
+#    <<: *discord-bot
+#  discord-stats-3:
+#    <<: *discord-bot
